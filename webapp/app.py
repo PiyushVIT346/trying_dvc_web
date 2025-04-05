@@ -39,13 +39,21 @@ def dashboard():
 
     elif session['role'] == 'user':
         if request.method == 'POST':
-            file = request.files['datafile']
-            if file:
-                filepath = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename))
-                file.save(filepath)
-                preds = predict(filepath)
-                return render_template('prediction_result.html', predictions=preds)
-        return render_template('dashboard_user.html')
+            features = [
+            float(request.form["ph"]),
+            float(request.form["Hardness"]),
+            float(request.form["Solids"]),
+            float(request.form["Chloramines"]),
+            float(request.form["Sulfate"]),
+            float(request.form["Conductivity"]),
+            float(request.form["Organic_carbon"]),
+            float(request.form["Trihalomethanes"]),
+            float(request.form["Turbidity"])
+        ]
+        prediction = predict(features)
+        result = "Safe to Drink ✅" if prediction == 1 else "Not Safe to Drink ❌"
+        return render_template("dashboard_user.html", result=result)
+    return render_template('dashboard_user.html')
 
 @app.route('/logout')
 def logout():

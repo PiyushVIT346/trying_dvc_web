@@ -1,6 +1,71 @@
-<h2>User Dashboard</h2>
-<form method="POST" enctype="multipart/form-data">
-    Upload Water Data CSV: <input type="file" name="datafile" accept=".csv">
-    <button type="submit">Get Prediction</button>
-</form>
-<a href="/logout">Logout</a>
+<!-- dashboard_user.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard - Water Potability Predictor</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            max-width: 600px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        h2 {
+            text-align: center;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Water Potability Prediction</h2>
+        <form method="POST" action="/predict">
+            <input type="number" step="any" name="ph" placeholder="pH">
+            <input type="number" step="any" name="Hardness" placeholder="Hardness">
+            <input type="number" step="any" name="Solids" placeholder="Solids">
+            <input type="number" step="any" name="Chloramines" placeholder="Chloramines">
+            <input type="number" step="any" name="Sulfate" placeholder="Sulfate">
+            <input type="number" step="any" name="Conductivity" placeholder="Conductivity">
+            <input type="number" step="any" name="Organic_carbon" placeholder="Organic Carbon">
+            <input type="number" step="any" name="Trihalomethanes" placeholder="Trihalomethanes">
+            <input type="number" step="any" name="Turbidity" placeholder="Turbidity">
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if result is defined %}
+        <div class="result">
+            Prediction: <strong>{{ result }}</strong>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

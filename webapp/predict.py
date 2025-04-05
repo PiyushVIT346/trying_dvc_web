@@ -1,26 +1,25 @@
-import pandas as pd
-import pickle
+# predict.py
 import numpy as np
-'''
-def load_model():
-    with open("models/water_model.pkl", "rb") as f:
-        return pickle.load(f)
+import pickle
+import os
 
-def predict(file_path):
-    df = pd.read_csv(file_path)
-    df.fillna(df.median(numeric_only=True), inplace=True)
-    model = load_model()
-    predictions = model.predict(df.values)
-    return predictions.tolist()
+# Load model
+model_path = os.path.join(os.path.dirname(__file__), "..", "models", "water_model.pkl")
+with open(model_path, "rb") as f:
+    model = pickle.load(f)
 
-"""sumary_line
+def predict_water_potability(features):
+    """
+    Predict water potability based on user input.
 
-Keyword arguments:
-argument -- description
-Return: return_description
-'''
-def predict(input_data):
-    with open("water_model.pkl", "rb") as f:
-        model = pickle.load(f)
-    prediction = model.predict(np.array([input_data]))
-    return prediction[0]
+    Args:
+        features (list or array): List of 9 numeric features in order:
+            [ph, Hardness, Solids, Chloramines, Sulfate, Conductivity,
+            Organic_carbon, Trihalomethanes, Turbidity]
+
+    Returns:
+        int: 0 (not potable) or 1 (potable)
+    """
+    input_array = np.array(features).reshape(1, -1)
+    prediction = model.predict(input_array)[0]
+    return prediction
