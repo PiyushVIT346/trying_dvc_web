@@ -1,0 +1,15 @@
+<h2>Admin Dashboard</h2>
+<form method="POST">
+    Set n_estimators: <input type="number" name="n_estimators">
+    <button type="submit">Train Model</button>
+</form>
+{% if metrics %}
+<h3>Metrics:</h3>
+<ul>
+    <li>Accuracy: {{ metrics.accuracy }}</li>
+    <li>Precision: {{ metrics.precision }}</li>
+    <li>Recall: {{ metrics.recall }}</li>
+    <li>F1 Score: {{ metrics["f1 score"] }}</li>
+</ul>
+{% endif %}
+<a href="/logout">Logout</a>
