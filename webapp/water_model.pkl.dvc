@@ -1,0 +1,5 @@
+outs:
+- md5: 5e12da1da5323509eea125520b22bef0
+  size: 36756272
+  hash: md5
+  path: water_model.pkl
